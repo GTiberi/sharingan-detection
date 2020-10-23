@@ -186,31 +186,33 @@ class App extends Component {
 			body: JSON.stringify({
 				input: this.state.input,
 			}),
-		})
-			.then((response) => {
-				if (response === undefined) {
-					response.json();
-				}
-			})
-			.then((response) => {
-				if (response) {
-					fetch("https://nameless-brook-81130.herokuapp.com/image", {
-						method: "put",
-						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify({
-							id: this.state.user.id,
-						}),
+		}).then((response) => {
+			if (response === undefined) {
+				response
+					.json()
+					.then((response) => {
+						if (response) {
+							fetch("https://nameless-brook-81130.herokuapp.com/image", {
+								method: "put",
+								headers: { "Content-Type": "application/json" },
+								body: JSON.stringify({
+									id: this.state.user.id,
+								}),
+							})
+								.then((response) => response.json())
+								.then((count) => {
+									playAudio();
+									this.setState(
+										Object.assign(this.state.user, { entries: count })
+									);
+								})
+								.catch(console.log);
+						}
+						this.DisplayFaceBox(this.CalculateFaceLocation(response));
 					})
-						.then((response) => response.json())
-						.then((count) => {
-							playAudio();
-							this.setState(Object.assign(this.state.user, { entries: count }));
-						})
-						.catch(console.log);
-				}
-				this.DisplayFaceBox(this.CalculateFaceLocation(response));
-			})
-			.catch((err) => console.log(err));
+					.catch((err) => console.log(err));
+			}
+		});
 	};
 
 	onRouteChange = (route) => {
