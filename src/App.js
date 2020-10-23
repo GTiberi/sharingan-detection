@@ -145,7 +145,7 @@ class App extends Component {
 		};
 	}
 
-	loadUser = data => {
+	loadUser = (data) => {
 		this.setState({
 			user: {
 				id: data.id,
@@ -157,7 +157,7 @@ class App extends Component {
 		});
 	};
 
-	CalculateFaceLocation = data => {
+	CalculateFaceLocation = (data) => {
 		const clarifaiFace =
 			data.outputs[0].data.regions[0].region_info.bounding_box;
 		const image = document.getElementById("inputImage");
@@ -171,11 +171,11 @@ class App extends Component {
 		};
 	};
 
-	DisplayFaceBox = box => {
+	DisplayFaceBox = (box) => {
 		this.setState({ box: box });
 	};
 
-	OnInputChange = event => {
+	OnInputChange = (event) => {
 		this.setState({ input: event.target.value });
 	};
 	OnButtonSubmit = () => {
@@ -187,9 +187,10 @@ class App extends Component {
 				input: this.state.input,
 			}),
 		})
-			.then(response => response.json())
-			.then(response => {
+			.then((response) => response.json())
+			.then((response) => {
 				if (response) {
+					console.log(response);
 					fetch("https://nameless-brook-81130.herokuapp.com/image", {
 						method: "put",
 						headers: { "Content-Type": "application/json" },
@@ -197,8 +198,8 @@ class App extends Component {
 							id: this.state.user.id,
 						}),
 					})
-						.then(response => response.json())
-						.then(count => {
+						.then((response) => response.json())
+						.then((count) => {
 							playAudio();
 							this.setState(Object.assign(this.state.user, { entries: count }));
 						})
@@ -206,10 +207,10 @@ class App extends Component {
 				}
 				this.DisplayFaceBox(this.CalculateFaceLocation(response));
 			})
-			.catch(err => console.log(err));
+			.catch((err) => console.log(err));
 	};
 
-	onRouteChange = route => {
+	onRouteChange = (route) => {
 		if (route === "signout") {
 			this.setState(initialState);
 		} else if (route === "home") {
