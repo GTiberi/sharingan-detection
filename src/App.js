@@ -187,7 +187,11 @@ class App extends Component {
 				input: this.state.input,
 			}),
 		})
-			.then((response) => response.json())
+			.then((response) => {
+				if (response === undefined) {
+					response.json();
+				}
+			})
 			.then((response) => {
 				if (response) {
 					fetch("https://nameless-brook-81130.herokuapp.com/image", {
@@ -203,8 +207,8 @@ class App extends Component {
 							this.setState(Object.assign(this.state.user, { entries: count }));
 						})
 						.catch(console.log);
-					this.DisplayFaceBox(this.CalculateFaceLocation(response));
 				}
+				this.DisplayFaceBox(this.CalculateFaceLocation(response));
 			})
 			.catch((err) => console.log(err));
 	};
