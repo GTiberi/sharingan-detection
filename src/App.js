@@ -190,7 +190,6 @@ class App extends Component {
 			.then((response) => response.json())
 			.then((response) => {
 				if (response) {
-					console.log(response);
 					fetch("https://nameless-brook-81130.herokuapp.com/image", {
 						method: "put",
 						headers: { "Content-Type": "application/json" },
@@ -204,8 +203,8 @@ class App extends Component {
 							this.setState(Object.assign(this.state.user, { entries: count }));
 						})
 						.catch(console.log);
+					this.DisplayFaceBox(this.CalculateFaceLocation(response));
 				}
-				this.DisplayFaceBox(this.CalculateFaceLocation(response));
 			})
 			.catch((err) => console.log(err));
 	};
