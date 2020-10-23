@@ -187,7 +187,7 @@ class App extends Component {
 				input: this.state.input,
 			}),
 		}).then((response) => {
-			if (response === undefined) {
+			if (response !== undefined) {
 				response
 					.json()
 					.then((response) => {
