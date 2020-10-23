@@ -197,11 +197,7 @@ class App extends Component {
 							id: this.state.user.id,
 						}),
 					})
-						.then((response) => {
-							if (response !== undefined) {
-								response.json();
-							}
-						})
+						.then((response) => response.json())
 						.then((count) => {
 							playAudio();
 							this.setState(Object.assign(this.state.user, { entries: count }));
