@@ -180,37 +180,33 @@ class App extends Component {
 	};
 	OnButtonSubmit = () => {
 		this.setState({ imageUrl: this.state.input });
-		if (this.imageUrl.length > 5) {
-			fetch("https://nameless-brook-81130.herokuapp.com/imageurl", {
-				method: "post",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					input: this.state.input,
-				}),
-			})
-				.then((response) => response.json())
-				.then((response) => {
-					if (response) {
-						fetch("https://nameless-brook-81130.herokuapp.com/image", {
-							method: "put",
-							headers: { "Content-Type": "application/json" },
-							body: JSON.stringify({
-								id: this.state.user.id,
-							}),
+		fetch("https://nameless-brook-81130.herokuapp.com/imageurl", {
+			method: "post",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				input: this.state.input,
+			}),
+		})
+			.then((response) => response.json())
+			.then((response) => {
+				if (response) {
+					fetch("https://nameless-brook-81130.herokuapp.com/image", {
+						method: "put",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							id: this.state.user.id,
+						}),
+					})
+						.then((response) => response.json())
+						.then((count) => {
+							playAudio();
+							this.setState(Object.assign(this.state.user, { entries: count }));
 						})
-							.then((response) => response.json())
-							.then((count) => {
-								playAudio();
-								this.setState(
-									Object.assign(this.state.user, { entries: count })
-								);
-							})
-							.catch(console.log);
-					}
-					this.DisplayFaceBox(this.CalculateFaceLocation(response));
-				})
-				.catch((err) => console.log(err));
-		}
+						.catch(console.log);
+				}
+				this.DisplayFaceBox(this.CalculateFaceLocation(response));
+			})
+			.catch((err) => console.log(err));
 	};
 
 	onRouteChange = (route) => {
