@@ -180,11 +180,7 @@ class App extends Component {
 	};
 	OnButtonSubmit = () => {
 		this.setState({ imageUrl: this.state.input });
-		if (
-			this.imageUrl.match(
-				/(http(s?):)([/|.|\w|\s|-])*(?:\.jpg|\.gif|\.png|[*])/
-			)
-		) {
+		if (this.imageUrl.length > 5) {
 			fetch("https://nameless-brook-81130.herokuapp.com/imageurl", {
 				method: "post",
 				headers: { "Content-Type": "application/json" },
